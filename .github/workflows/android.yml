@@ -1,7 +1,7 @@
 name: Android CI
 
 on:
-  workflow_dispatch: {}          # Elle çalıştırma düğmesi
+  workflow_dispatch: {}            # Elle çalıştırma butonu
   push:
     branches: [ "master", "main" ]
 
@@ -20,14 +20,14 @@ jobs:
           java-version: "17"
           cache: gradle
 
+      # <<< HATA VEREN ADIMIN DOĞRUSU
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
-        with:
-          cmdline-tools-version: 11076708
-          packages: |
-            platform-tools
-            platforms;android-34
-            build-tools;34.0.0
+
+      - name: Install required SDK packages
+        run: |
+          yes | sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+          yes | sdkmanager --licenses
 
       - name: Grant execute permission for Gradle
         run: chmod +x gradlew
